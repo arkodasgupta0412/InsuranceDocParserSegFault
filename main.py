@@ -28,7 +28,7 @@ def greet():
     return {"message": "Insurance Parser API is live at /api/v1."}
 
 
-@app.post("/api/v1/hackrx/run")
+@app.post("/hackrx/run")
 def process_doc(request: QueryRequest, authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Authorization header must start with 'Bearer '")

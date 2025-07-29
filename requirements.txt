@@ -10,6 +10,7 @@ cachetools==5.5.2
 certifi==2025.7.14
 cffi==1.17.1
 charset-normalizer==3.4.2
+chromadb
 colorclass==2.2.2
 compressed-rtf==1.0.7
 cryptography==45.0.5

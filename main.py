@@ -12,11 +12,7 @@ from utils.llm_response import generate_structured_answers
 
 load_dotenv()
 
-app = FastAPI(
-    title="Insurance Parser API",
-    version="1.0",
-    root_path="/api/v1"
-)
+app = FastAPI(title="Insurance Parser API", version="1.0")
 
 BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
@@ -24,11 +20,11 @@ class QueryRequest(BaseModel):
     documents: HttpUrl
     questions: List[str]
 
-@app.get("/")
-def greet():
-    return {"message": "Insurance Parser API is live at /api/v1."}
+#@app.get("/")
+#def greet():
+#    return {"message": "Insurance Parser API is live at /api/v1."}
 
-@app.post("/hackrx/run")
+@app.post("/api/v1/hackrx/run")
 def process_doc(request: QueryRequest, authorization: str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Authorization header must start with 'Bearer '")

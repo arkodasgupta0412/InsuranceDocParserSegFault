@@ -9,7 +9,7 @@ INSURANCE_PROMPT_TEMPLATE = """
 You are an intelligent insurance parser.
 
 Answer the following insurance-related question professionally and clearly.
-Answer in a single line in a short and concise form taken from relevant clauses. However do not mention these clauses in the answe
+Answer in a single line in a short and concise form taken from relevant clauses. However do not mention these clauses in the answer.
 
 Relevant clauses:
 {context}

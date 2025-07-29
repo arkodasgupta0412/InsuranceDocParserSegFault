@@ -1,10 +1,12 @@
-from fastapi import FastAPI, Header, HTTPException, status
+from fastapi import FastAPI, Header, HTTPException
+from fastapi.requests import Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, HttpUrl
 from typing import List
 import requests
 from dotenv import load_dotenv
-import os
-
+import os, sys
+import traceback
 from utils.chunker import chunk_documents
 from utils.loader import load_document_from_bytes
 from utils.embedder import get_vectorstore
@@ -12,7 +14,7 @@ from utils.llm_response import generate_structured_answers
 
 load_dotenv()
 
-app = FastAPI(title="Insurance Parser API", version="1.0")
+app = FastAPI(title="Insurance Parser API", version="1.0", root_path='/api/v1')
 
 BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
@@ -20,9 +22,11 @@ class QueryRequest(BaseModel):
     documents: HttpUrl
     questions: List[str]
 
-#@app.get("/")
-#def greet():
-#    return {"message": "Insurance Parser API is live at /api/v1."}
+
+@app.get("/")
+def greet():
+    return {"message": "Insurance Parser API is live at /api/v1."}
+
 
 @app.post("/api/v1/hackrx/run")
 def process_doc(request: QueryRequest, authorization: str = Header(...)):
@@ -56,7 +60,6 @@ def process_doc(request: QueryRequest, authorization: str = Header(...)):
     vectordb = get_vectorstore(chunks)
     answers = generate_structured_answers(request.questions, vectordb)
 
-    return {
-        "answers": answers
-    }
+    return {"answers": answers}
+
 
